@@ -35,19 +35,21 @@ client.on("message", function(message) {
 
 const onPing = function(message) {
     const timeTaken = Date.now() - message.createdTimestamp;
-    message.channel.send(`Ping ${timeTaken}ms`);
+    message.channel.send(`Ping ${timeTaken}ms.`);
 }
 
 const onCuss = function(message, args) {
-    const cussLen = cussWords.length;
     if(args.length == 0) {
         message.channel.send("Err: command 'cuss' requires and argument");
         return;
     }
-    if(noCuss.includes(args[0].toLowerCase())) {
-        message.reply(`Can't cuss ${args[0]}`);
+    let userId = args[0].includes('<@!') ? args[0].replace('<@!', '').replace('>', '')
+        : args[0].includes('<@') ? args[0].replace('<@', '').replace('>', '') : '';
+    if(userId === "") {
+        message.channel.send("Err: User not found");
         return;
     }
-    const cussIndex = Math.floor(Math.random() * cussLen);
-    message.channel.send(`${args[0]} ${cussWords[cussIndex]}`);
+    let userName = client.users.cache.get(userId);
+    let cussIndex = Math.floor(Math.random() * cussWords.length);
+    message.channel.send(`${userName} ${cussWords[cussIndex]}`)
 }
