@@ -6,11 +6,13 @@ client.login(config.BOT_TOKEN);
 
 const prefix = "!";
 
+const ownerId = config.OWNER_ID;
+
 // Insert cuss words here
 const cussWords = [];
 
 // Whom not to cuss
-const noCuss = [];
+const noCuss = [ownerId];
 
 client.on("message", function(message) {
     if(message.author.bot) return;
@@ -28,6 +30,9 @@ client.on("message", function(message) {
         case "cuss":
             onCuss(message, args);
             break;
+        case "no-cuss":
+            onNoCuss(message, args);
+            break;
         default:
             message.reply(`${command}: Command not found`)
     }
@@ -40,16 +45,45 @@ const onPing = function(message) {
 
 const onCuss = function(message, args) {
     if(args.length == 0) {
-        message.channel.send("Err: command 'cuss' requires and argument");
+        message.channel.send("Err: command 'cuss' requires an argument");
         return;
     }
-    let userId = args[0].includes('<@!') ? args[0].replace('<@!', '').replace('>', '')
-        : args[0].includes('<@') ? args[0].replace('<@', '').replace('>', '') : '';
+    let userId = getUserId(args[0]);
     if(userId === "") {
         message.channel.send("Err: User not found");
         return;
     }
+    if(noCuss.includes(userId)) {
+        message.reply("Can't cuss this user!");
+        return;
+    }
     let userName = client.users.cache.get(userId);
+    if(userName == undefined) {
+        message.reply("Can't cuss this user!");
+    }
     let cussIndex = Math.floor(Math.random() * cussWords.length);
-    message.channel.send(`${userName} ${cussWords[cussIndex]}`)
+    message.channel.send(`<@${userId}> ${userName} ${cussWords[cussIndex]}`)
+}
+
+const onNoCuss = function(message, args) {
+    if(args.length == 0) {
+        message.channel.send("Err: command 'no-cuss' requires an argument");
+        return;
+    }
+    let userId = getUserId(args[0]);
+    if(userId === "") {
+        message.channel.send("Err: User not found");
+        return;
+    }
+    if(userId !== ownerId) {
+        message.reply("Only authorized members can use this command!");
+        return;
+    }
+    noCuss.push(userId);
+}
+
+const getUserId = function(mention) {
+    let userId = mention.includes('<@!') ? mention.replace('<@!', '').replace('>', '')
+        : mention.includes('<@') ? mention.replace('<@', '').replace('>', '') : '';
+    return userId
 }
