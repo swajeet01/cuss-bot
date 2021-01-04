@@ -24,6 +24,9 @@ client.on("message", function(message) {
     const command = args.shift().toLowerCase();
 
     switch(command) {
+        case "intro":
+            onIntro(message);
+            break;
         case "ping":
             onPing(message);
             break;
@@ -37,6 +40,10 @@ client.on("message", function(message) {
             message.reply(`${command}: Command not found`)
     }
 });
+
+const onIntro = function(message) {
+    message.channel.send("Hello everyone! I am cuss-bot, I cuss people on request.");
+}
 
 const onPing = function(message) {
     const timeTaken = Date.now() - message.createdTimestamp;
