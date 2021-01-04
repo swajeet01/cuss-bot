@@ -48,7 +48,8 @@ const onCuss = function(message, args) {
         message.channel.send("Err: command 'cuss' requires an argument");
         return;
     }
-    let userId = getUserId(args[0]);
+    let mention = args[0]
+    let userId = getUserId(mention);
     if(userId === "") {
         message.channel.send("Err: User not found");
         return;
@@ -60,26 +61,38 @@ const onCuss = function(message, args) {
     let userName = client.users.cache.get(userId);
     if(userName == undefined) {
         message.reply("Can't cuss this user!");
+        return;
     }
     let cussIndex = Math.floor(Math.random() * cussWords.length);
-    message.channel.send(`<@${userId}> ${userName} ${cussWords[cussIndex]}`)
+    message.channel.send(`${mention} ${cussWords[cussIndex]}`)
 }
 
 const onNoCuss = function(message, args) {
+    if(message.author.id !== "" + ownerId) {
+        message.reply("Only authorized members can use this command!");
+        return;
+    }
     if(args.length == 0) {
         message.channel.send("Err: command 'no-cuss' requires an argument");
         return;
     }
-    let userId = getUserId(args[0]);
+    let mention = args[0];
+    let userId = getUserId(mention);
     if(userId === "") {
         message.channel.send("Err: User not found");
         return;
     }
-    if(userId !== ownerId) {
-        message.reply("Only authorized members can use this command!");
+    if(noCuss.includes(userId)) {
+        message.reply("Already in no-cuss members.");
         return;
     }
     noCuss.push(userId);
+    let userName = client.users.cache.get(userId);
+    if(userName == undefined) {
+        message.reply("Okay! Not cussing that person anymore.");
+        return;
+    }
+    message.reply(`Okay! Not cussing ${mention} anymore`);
 }
 
 const getUserId = function(mention) {
