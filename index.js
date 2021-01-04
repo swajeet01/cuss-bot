@@ -15,8 +15,12 @@ client.on("message", function(message) {
     const args = full_command.split(" ");
     const command = args.shift().toLowerCase();
 
-    if(command === "ping") {
-        onPing(message);
+    switch(command) {
+        case "ping":
+            onPing(message);
+            break;
+        default:
+            message.reply(`${command}: Command not found`)
     }
 });
 
