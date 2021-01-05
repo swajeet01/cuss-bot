@@ -94,12 +94,17 @@ const onNoCuss = function(message, args) {
         return;
     }
     noCuss.push(userId);
+    message.reply("Okay! Not cussing that person anymore.");
+    /* TODO: Fix @invalid-user mention on line 104
     let userName = client.users.cache.get(userId);
     if(userName == undefined) {
         message.reply("Okay! Not cussing that person anymore.");
         return;
     }
     message.reply(`Okay! Not cussing ${mention} anymore`);
+    console.log(mention);
+    console.log(args[0]);
+    */
 }
 
 const getUserId = function(mention) {
