@@ -10,7 +10,7 @@ A `config.json` file needs to be in source directory as-
 ```
 Where `BOT_TOKEN` is private token of Discord bot and OWNER_ID is Discord ID
 of bot owner, which will be used in `noCuss` array containing IDs of users
-whom bot will refuse to cuss and also this user can use `no-cuss` command to
+whom bot will refuse to cuss further more this user can use `no-cuss` command to
 add users to `noCuss` array.
 
 Run the script as `$ node index.js`
