@@ -41,16 +41,16 @@ client.on("message", function(message) {
     }
 });
 
-const onIntro = function(message) {
+const onIntro = (message) => {
     message.channel.send("Hello everyone! I am cuss-bot, I cuss people on request.");
 }
 
-const onPing = function(message) {
+const onPing = (message) => {
     const timeTaken = Date.now() - message.createdTimestamp;
     message.channel.send(`Ping ${timeTaken}ms.`);
 }
 
-const onCuss = function(message, args) {
+const onCuss = (message, args) => {
     if(args.length == 0) {
         message.channel.send("Err: command 'cuss' requires an argument");
         return;
@@ -74,7 +74,7 @@ const onCuss = function(message, args) {
     message.channel.send(`${mention} ${cussWords[cussIndex]}`)
 }
 
-const onNoCuss = function(message, args) {
+const onNoCuss = (message, args) => {
     if(message.author.id !== "" + ownerId) {
         message.reply("Only authorized members can use this command!");
         return;
@@ -107,7 +107,7 @@ const onNoCuss = function(message, args) {
     */
 }
 
-const getUserId = function(mention) {
+const getUserId = (mention) => {
     let userId = mention.includes('<@!') ? mention.replace('<@!', '').replace('>', '')
         : mention.includes('<@') ? mention.replace('<@', '').replace('>', '') : '';
     return userId
