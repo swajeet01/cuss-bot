@@ -19,9 +19,9 @@ client.on("message", function(message) {
 
     if(!message.content.startsWith(prefix)) return;
 
-    const full_command = message.content.slice(prefix.length);
-    const args = full_command.split(" ");
-    const command = args.shift().toLowerCase();
+    let full_command = message.content.slice(prefix.length);
+    let args = full_command.split(" ");
+    let command = args.shift().toLowerCase();
 
     switch(command) {
         case "intro":
@@ -46,7 +46,7 @@ const onIntro = (message) => {
 }
 
 const onPing = (message) => {
-    const timeTaken = Date.now() - message.createdTimestamp;
+    let timeTaken = Date.now() - message.createdTimestamp;
     message.channel.send(`Ping ${timeTaken}ms.`);
 }
 
