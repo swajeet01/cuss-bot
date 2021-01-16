@@ -14,7 +14,7 @@ const cussWords = [];
 // Whom not to cuss
 const noCuss = [ownerId];
 
-client.on("message", function(message) {
+client.on("message", (message) => {
     if(message.author.bot) return;
 
     if(!message.content.startsWith(prefix)) return;
