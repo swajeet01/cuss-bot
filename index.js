@@ -4,7 +4,7 @@ const config = require("./config.json");
 const client = new Discord.Client();
 client.login(config.BOT_TOKEN);
 
-const prefix = "!";
+const prefix = "~";
 
 const ownerId = config.OWNER_ID;
 
