@@ -103,4 +103,5 @@ dist
 # TernJS port file
 .tern-port
 
+# Do not remove this line otherwise you might risk pushing your botToken
 config.json
