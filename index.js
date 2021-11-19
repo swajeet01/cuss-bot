@@ -9,7 +9,7 @@ const prefix = "~";
 const ownerId = config.ownerId;
 
 // Insert cuss words here
-const cussWords = new Set("good", "sexy", "jodd");
+const cussWords = new Set();
 
 // Whom not to cuss
 const noCuss = [ownerId];
